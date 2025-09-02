@@ -1,0 +1,21 @@
+# .github/workflows/main.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t aceest-fitness-app .
+
+      - name: Run Pytest tests within the container
+        run: |
+          docker run --rm aceest-fitness-app pytest
